@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="departamentos">
+        <s:complexType />
+      </s:element>
+      <s:element name="departamentosResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="departamentosResult" type="tns:ArrayOfArrayOfAnyType" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfArrayOfAnyType">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="ArrayOfAnyType" nillable="true" type="tns:ArrayOfAnyType" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfAnyType">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="anyType" nillable="true" />
+        </s:sequence>
+      </s:complexType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="departamentosSoapIn">
+    <wsdl:part name="parameters" element="tns:departamentos" />
+  </wsdl:message>
+  <wsdl:message name="departamentosSoapOut">
+    <wsdl:part name="parameters" element="tns:departamentosResponse" />
+  </wsdl:message>
+  <wsdl:portType name="WebServicePeruSoap">
+    <wsdl:operation name="departamentos">
+      <wsdl:input message="tns:departamentosSoapIn" />
+      <wsdl:output message="tns:departamentosSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="WebServicePeruSoap" type="tns:WebServicePeruSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="departamentos">
+      <soap:operation soapAction="http://tempuri.org/departamentos" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="WebServicePeruSoap12" type="tns:WebServicePeruSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="departamentos">
+      <soap12:operation soapAction="http://tempuri.org/departamentos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="WebServicePeru">
+    <wsdl:port name="WebServicePeruSoap" binding="tns:WebServicePeruSoap">
+      <soap:address location="http://localhost:51899/WebServicePeru.asmx" />
+    </wsdl:port>
+    <wsdl:port name="WebServicePeruSoap12" binding="tns:WebServicePeruSoap12">
+      <soap12:address location="http://localhost:51899/WebServicePeru.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
