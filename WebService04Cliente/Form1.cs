@@ -24,6 +24,7 @@ namespace WebService04Cliente
         private void Form1_Load(object sender, EventArgs e)
         {
             Departamentos();
+            Provincias();
         }
 
         private void Departamentos()
@@ -41,6 +42,26 @@ namespace WebService04Cliente
             comboBox1.DisplayMember = "text";
 
             comboBox1.SelectedIndex = 0;
+        }
+
+        private void Provincias()
+        {
+            Item item = (Item)comboBox1.SelectedItem;
+            int iddepartamento = item.Id;
+
+            object[][] prov = combos.Provincias(iddepartamento);
+
+            comboBox2.Items.Clear();
+
+            foreach (object[] d in prov)
+            {
+                comboBox2.Items.Add(new Item(Convert.ToInt32(d[0]), Convert.ToString(d[1])));
+            }
+
+            comboBox2.ValueMember = "id";
+            comboBox2.DisplayMember = "text";
+
+            comboBox2.SelectedIndex = 0;
         }
 
         // CLASE AUXILIAR PARA POBLAR COMBOS
@@ -62,6 +83,11 @@ namespace WebService04Cliente
             public int Id { get => id; set => id = value; }
 
             public string Text { get => text; set => text = value; }
+        }
+
+        private void comboBox1_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            Provincias();
         }
     }
 }

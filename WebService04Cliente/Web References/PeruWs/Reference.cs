@@ -32,6 +32,8 @@ namespace WebService04Cliente.PeruWs {
         
         private System.Threading.SendOrPostCallback departamentosOperationCompleted;
         
+        private System.Threading.SendOrPostCallback ProvinciasOperationCompleted;
+        
         private bool useDefaultCredentialsSetExplicitly;
         
         /// <remarks/>
@@ -74,6 +76,9 @@ namespace WebService04Cliente.PeruWs {
         public event departamentosCompletedEventHandler departamentosCompleted;
         
         /// <remarks/>
+        public event ProvinciasCompletedEventHandler ProvinciasCompleted;
+        
+        /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/departamentos", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
         [return: System.Xml.Serialization.XmlArrayItemAttribute("ArrayOfAnyType")]
         [return: System.Xml.Serialization.XmlArrayItemAttribute(NestingLevel=1)]
@@ -99,6 +104,37 @@ namespace WebService04Cliente.PeruWs {
             if ((this.departamentosCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.departamentosCompleted(this, new departamentosCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/Provincias", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        [return: System.Xml.Serialization.XmlArrayItemAttribute("ArrayOfAnyType")]
+        [return: System.Xml.Serialization.XmlArrayItemAttribute(NestingLevel=1)]
+        public object[][] Provincias(int departamento) {
+            object[] results = this.Invoke("Provincias", new object[] {
+                        departamento});
+            return ((object[][])(results[0]));
+        }
+        
+        /// <remarks/>
+        public void ProvinciasAsync(int departamento) {
+            this.ProvinciasAsync(departamento, null);
+        }
+        
+        /// <remarks/>
+        public void ProvinciasAsync(int departamento, object userState) {
+            if ((this.ProvinciasOperationCompleted == null)) {
+                this.ProvinciasOperationCompleted = new System.Threading.SendOrPostCallback(this.OnProvinciasOperationCompleted);
+            }
+            this.InvokeAsync("Provincias", new object[] {
+                        departamento}, this.ProvinciasOperationCompleted, userState);
+        }
+        
+        private void OnProvinciasOperationCompleted(object arg) {
+            if ((this.ProvinciasCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.ProvinciasCompleted(this, new ProvinciasCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -134,6 +170,32 @@ namespace WebService04Cliente.PeruWs {
         private object[] results;
         
         internal departamentosCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public object[][] Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((object[][])(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void ProvinciasCompletedEventHandler(object sender, ProvinciasCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class ProvinciasCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal ProvinciasCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }

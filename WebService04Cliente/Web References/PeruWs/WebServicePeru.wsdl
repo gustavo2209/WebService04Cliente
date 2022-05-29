@@ -22,6 +22,20 @@
           <s:element minOccurs="0" maxOccurs="unbounded" name="anyType" nillable="true" />
         </s:sequence>
       </s:complexType>
+      <s:element name="Provincias">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="departamento" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ProvinciasResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ProvinciasResult" type="tns:ArrayOfArrayOfAnyType" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
     </s:schema>
   </wsdl:types>
   <wsdl:message name="departamentosSoapIn">
@@ -30,10 +44,20 @@
   <wsdl:message name="departamentosSoapOut">
     <wsdl:part name="parameters" element="tns:departamentosResponse" />
   </wsdl:message>
+  <wsdl:message name="ProvinciasSoapIn">
+    <wsdl:part name="parameters" element="tns:Provincias" />
+  </wsdl:message>
+  <wsdl:message name="ProvinciasSoapOut">
+    <wsdl:part name="parameters" element="tns:ProvinciasResponse" />
+  </wsdl:message>
   <wsdl:portType name="WebServicePeruSoap">
     <wsdl:operation name="departamentos">
       <wsdl:input message="tns:departamentosSoapIn" />
       <wsdl:output message="tns:departamentosSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Provincias">
+      <wsdl:input message="tns:ProvinciasSoapIn" />
+      <wsdl:output message="tns:ProvinciasSoapOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="WebServicePeruSoap" type="tns:WebServicePeruSoap">
@@ -47,11 +71,29 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="Provincias">
+      <soap:operation soapAction="http://tempuri.org/Provincias" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="WebServicePeruSoap12" type="tns:WebServicePeruSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="departamentos">
       <soap12:operation soapAction="http://tempuri.org/departamentos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Provincias">
+      <soap12:operation soapAction="http://tempuri.org/Provincias" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
